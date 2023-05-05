@@ -54,20 +54,16 @@ public class SubscriptionService {
         User user=userRepository.findById(userId).get();
         Subscription subscription=user.getSubscription();
         SubscriptionType subscriptionType=user.getSubscription().getSubscriptionType();
-        Integer difference=0;
+        Integer difference=null;
         if(subscriptionType.equals(SubscriptionType.ELITE))
             throw new Exception("Already the best Subscription");
         else if(subscriptionType.equals(SubscriptionType.PRO)){
             difference=1000-800;
             subscription.setSubscriptionType(SubscriptionType.ELITE);
-            subscription.setTotalAmountPaid(1000);
-            subscription.setNoOfScreensSubscribed(350);
         }
         else if(subscriptionType.equals(SubscriptionType.BASIC)){
             difference=300;
             subscription.setSubscriptionType(SubscriptionType.PRO);
-            subscription.setTotalAmountPaid(800);
-            subscription.setNoOfScreensSubscribed(250);
         }
         subscriptionRepository.save(subscription);
         user.setSubscription(subscription);
